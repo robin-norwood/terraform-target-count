@@ -4,18 +4,16 @@ I've reproduced the following with Terraform versions 0.14.4 and 0.14.7.
 
 1. Initialize the repo: `terraform init`
 1. Apply config: `terraform apply -auto-approve`
-  - Three each of "foo", "bar", and "baz" will be created.
+   * Three each of "foo", "bar", and "baz" will be created.
 1. Show plan for reducing # of resources: `terraform plan -var=resource_count=2`
-  - One of each group will be destroyed, as expected.
+   * One of each group will be destroyed, as expected.
 1. Apply change, targeting the last "bar" resource: `terraform apply -var=resource_count=2 -target=null_resource.bar[2]`
-    - Expected result:
-      Only the targeted resource (`null_resource.bar[2]`) will be destroyed.
-    - Actual result:
-      The plan says two resources (`null_resource.bar[2] and null_resource.foo[2]`) will be destroyed, but accepting the plan only destroys one resource (`null_resource.bar[2]`).
+   * Expected result: Only the targeted resource (`null_resource.bar[2]`) will be destroyed.
+   * Actual result: The plan says two resources (`null_resource.bar[2] and null_resource.foo[2]`) will be destroyed, but accepting the plan only destroys one resource (`null_resource.bar[2]`).
 1. Notes/other things I tried:
-  - `terraform destroy -target=null_resource.bar[2]` works as expected - plan shows 1 to destroy, 1 is destroyed.
-  - I ran into this via a more complex example: https://github.com/hashicorp/learn-terraform-resource-targeting
-  - Saving the plan to a file and using `terraform show blah.plan` and `terraform apply blah.plan` gives the same results.
+   * `terraform destroy -target=null_resource.bar[2]` works as expected - plan shows 1 to destroy, 1 is destroyed.
+   * I ran into this via a more complex example: https://github.com/hashicorp/learn-terraform-resource-targeting
+   * Saving the plan to a file and using `terraform show blah.plan` and `terraform apply blah.plan` gives the same results.
 
 Output of final step (terraform v0.14.7):
 
