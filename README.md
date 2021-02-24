@@ -2,6 +2,8 @@
 
 I've reproduced the following with Terraform versions 0.14.4 and 0.14.7.
 
+1. Check out repository: `git clone git@github.com:robin-norwood/terraform-target-count.git`
+1. Change directory: `cd terraform-target-count`
 1. Initialize the repo: `terraform init`
 1. Apply config: `terraform apply -auto-approve`
    * Three each of "foo", "bar", and "baz" will be created.
